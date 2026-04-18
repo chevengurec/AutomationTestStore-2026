@@ -20,28 +20,28 @@ public class BaseTest {
     protected WaitHelper waitHelper;
 
     @BeforeEach
-    public void setUp(TestInfo testInfo) {
+    public void setUp() {
         ProjectConfig config = ConfiguratorManager.getConfig();
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
 
         if (System.getenv("CI") != null) {
-//            options.addArguments("--headless=new");
+            options.addArguments("--headless=new");
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
             options.addArguments("--disable-gpu");
             options.addArguments("--window-size=1920,1080");
-        }
-
-        driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
-
-        if (System.getenv("CI") != null) {
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+            // Убираем maximize() для headless
+            driver = new ChromeDriver(options);
         } else {
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            driver = new ChromeDriver(options);
+            driver.manage().window().maximize();
         }
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(
+                System.getenv("CI") != null ? 30 : 10
+        ));
 
         driver.get(config.homepageUrl());
         waitHelper = new WaitHelper(driver, 10);
