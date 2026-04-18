@@ -27,7 +27,7 @@ public class BaseTest {
         ChromeOptions options = new ChromeOptions();
 
         if (System.getenv("CI") != null) {
-            options.addArguments("--headless=new");
+//            options.addArguments("--headless=new");
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
             options.addArguments("--disable-gpu");
