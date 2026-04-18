@@ -31,13 +31,19 @@ public class BaseTest {
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
             options.addArguments("--disable-gpu");
+            options.addArguments("--window-size=1920,1080");
         }
 
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get(config.homepageUrl());
 
+        if (System.getenv("CI") != null) {
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        } else {
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        }
+
+        driver.get(config.homepageUrl());
         waitHelper = new WaitHelper(driver, 10);
     }
 
