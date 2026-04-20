@@ -17,15 +17,7 @@ public interface ProjectConfig extends Config {
     @Key("homepage.url")
     String homepageUrl();
 
-    @Key("cart.url")
-    String cartUrl();
-
-    @Key("apparel.url")
-    String apparelUrl();
-
-    @Key("shoes.url")
-    String shoesUrl();
-
     @Key("screenshot.pathname")
     String screenshotPathname();
+
 }

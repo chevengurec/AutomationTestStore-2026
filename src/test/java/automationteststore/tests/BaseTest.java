@@ -2,11 +2,12 @@ package automationteststore.tests;
 
 import automationteststore.config.ConfiguratorManager;
 import automationteststore.config.ProjectConfig;
+import automationteststore.utils.ScreenshotExtension;
 import automationteststore.utils.WaitHelper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -14,6 +15,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import java.io.IOException;
 import java.time.Duration;
 
+@ExtendWith(ScreenshotExtension.class)
 public class BaseTest {
 
     protected WebDriver driver;
@@ -32,7 +34,6 @@ public class BaseTest {
             options.addArguments("--disable-dev-shm-usage");
             options.addArguments("--disable-gpu");
             options.addArguments("--window-size=1920,1080");
-            // Убираем maximize() для headless
             driver = new ChromeDriver(options);
         } else {
             driver = new ChromeDriver(options);
@@ -48,7 +49,7 @@ public class BaseTest {
     }
 
     @AfterEach
-    public void tearDown() throws IOException {
+    public void tearDown()  {
         if (driver != null) {
             driver.quit();
         }

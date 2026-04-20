@@ -2,13 +2,11 @@ package automationteststore.pages;
 
 import automationteststore.utils.RandomPicker;
 import automationteststore.utils.WaitHelper;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Random;
 
 public class HomePage extends BasePage {
@@ -19,8 +17,6 @@ public class HomePage extends BasePage {
     private WebElement searchInput;
     @FindBy(xpath="//div[@class='button-in-search']")
     private WebElement searchButton;
-    @FindBy(xpath="//ul[contains(@class, 'dropdown-menu') and contains(@class, 'topcartopen')]")
-    private WebElement cartInfo;
     @FindBy(xpath="//a[@class='dropdown-toggle' and contains(@href, 'checkout/cart')]")
     private WebElement cartLink;
 
@@ -53,9 +49,6 @@ public class HomePage extends BasePage {
         return new SearchPage(driver, waitHelper);
     }
 
-    public List<WebElement> pickRandomProducts(int count) {
-        return RandomPicker.getRandomElements(listOfProducts, count);
-    }
 
     public List<WebElement> pickRandomButtons(int count) {
         return RandomPicker.getRandomElements(listOfAddingButtons, count);

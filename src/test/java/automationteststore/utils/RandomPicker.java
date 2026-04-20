@@ -6,19 +6,7 @@ import java.util.*;
 
 public class RandomPicker {
     public static List<WebElement> getRandomElements(List<WebElement> list, int count) {
-//        if (list == null || list.isEmpty() || count <= 0) {
-//            return Collections.emptyList();
-//        }
-//
-//        List<WebElement> result = new ArrayList<>();
-//        List<WebElement> shuffledList = new ArrayList<>(list);
-//        Collections.shuffle(shuffledList, new Random());
-//
-//        for (int i = 0; i < Math.min(count, shuffledList.size()); i++) {
-//            result.add(shuffledList.get(i));
-//        }
-//        return result;
-//    }
+
 
         if (list == null || list.isEmpty() || count <= 0) {
             return Collections.emptyList();

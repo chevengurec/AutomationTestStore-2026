@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.List;
 
 public class ProductPage extends  BasePage {
 
@@ -27,7 +26,6 @@ public class ProductPage extends  BasePage {
     }
 
     public CartPage addToCart() {
-//        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", addToCartButton);
         waitHelper.waitForClickable(addToCartButton);
         click(addToCartButton);
         return new CartPage(driver, waitHelper);

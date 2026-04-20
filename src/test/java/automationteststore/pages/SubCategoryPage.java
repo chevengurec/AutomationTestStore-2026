@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,6 @@ public class SubCategoryPage extends BasePage {
     private WebElement dropDownSort;
 
     public SubCategoryPage(WebDriver driver, WaitHelper waitHelper) {
-
         super(driver, waitHelper);
     }
 

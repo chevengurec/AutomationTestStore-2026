@@ -1,27 +1,15 @@
 package automationteststore.tests;
 
 import java.io.File;
-import automationteststore.pages.CategoryPage;
 import automationteststore.pages.HomePage;
 import automationteststore.pages.SubCategoryPage;
 import automationteststore.utils.SortValidator;
-import automationteststore.utils.WaitHelper;
-import io.qameta.allure.Description;
-import io.qameta.allure.Story;
-import jdk.jfr.Name;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.io.IOException;
 import java.util.Comparator;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("CASE 1")

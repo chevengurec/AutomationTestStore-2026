@@ -1,11 +1,10 @@
 package automationteststore.pages;
 
 import automationteststore.utils.WaitHelper;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 import java.util.List;
 
@@ -19,23 +18,11 @@ public class CartPage extends BasePage {
     @FindBy(xpath = "//input[contains(@name, 'quantity[')]")
     private List<WebElement> quantityInputs;
 
-    @FindBy(xpath = "//table[@class='table table-striped table-bordered']//tbody/tr[position()>1]")
-    private List<WebElement> rows;
-
-    @FindBy(id = "cart_update")
-    private WebElement updateCartButton;
-
     @FindBy(xpath = "//table/tbody/tr/td[position()=6 and @class='align_right']")
     private List<WebElement> totalPrices;
 
     @FindBy(xpath = "//td[contains(., 'Sub-Total')]/following-sibling::td/span[contains(@class, 'bold')]")
     private WebElement subTotalPrice;
-
-    @FindBy(xpath = "//td[contains(., 'Flat Shipping Rate')]/following-sibling::td/span[contains(@class, 'bold')]")
-    private WebElement fiatRate;
-
-    @FindBy(xpath = "//td[span[normalize-space(text())='Total:']]/following-sibling::td/span")
-    private WebElement total;
 
     @FindBy(xpath = "//a[contains(@class, 'btn-default')][contains(@href, 'remove')]")
     private List<WebElement> listOfRemoveButtons;
@@ -44,12 +31,7 @@ public class CartPage extends BasePage {
         super(driver, waitHelper);
     }
 
-    public boolean isCartPageDisplayed() {
-        waitHelper.waitForVisibility(cartHeading);
-        return cartHeading.isDisplayed();
-    }
-
-    public int getCheapestProductIndex() {
+     public int getCheapestProductIndex() {
         double minPrice = Double.MAX_VALUE;
         int minIndex = 0;
 

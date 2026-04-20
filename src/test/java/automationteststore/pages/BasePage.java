@@ -4,7 +4,6 @@ import automationteststore.utils.WaitHelper;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -36,15 +35,6 @@ public class BasePage {
         element.click();
     }
 
-    protected void clickRandomTimes(WebElement element, int min, int max) {
-        for (int i = 0, n = new Random().nextInt(max - min + 1) + min; i < n; i++) click(element);
-    }
-
-    protected void selectFromDropdown(WebElement dropdownElement, String visibleText) {
-        scrollToElement(dropdownElement);
-        Select select = new Select(dropdownElement);
-        select.selectByVisibleText(visibleText);
-    }
 
     protected void fillFieldWithText(WebElement field, String text) {
         scrollToElement(field);
@@ -53,7 +43,4 @@ public class BasePage {
         field.sendKeys(text);
     }
 
-    void refresh() {
-       PageFactory.initElements(driver, this);
-    }
 }
