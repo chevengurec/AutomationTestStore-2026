@@ -11,12 +11,14 @@ target/
 .classpath
 .vscode/
 
-# Screenshots (локальные, не нужны в репозитории)
+# Screenshots
 screenshots/
+scr.png
 
-# Allure reports
+# Allure
 allure-results/
 allure-report/
+.allure/
 
 # Logs
 logs/
@@ -31,5 +33,5 @@ logs/
 chromedriver.exe
 chromedriver
 
-# Local config (если будет)
+# Local config
 config.local.properties
