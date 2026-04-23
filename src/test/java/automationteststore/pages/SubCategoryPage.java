@@ -45,9 +45,7 @@ public class SubCategoryPage extends BasePage {
     public List<Double> getProductPrices() {
         List<Double> prices = new ArrayList<>();
         for (WebElement price : listOfPrices) {
-            prices.add(Double.parseDouble(price.getText()
-                    .replace("$", "")
-                    .replace("€", "")));
+            prices.add(Double.parseDouble(price.getText().replace("$", "").replace("€", "")));
         }
         return prices;
     }

@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-
 import java.util.List;
 
 public class CartPage extends BasePage {
@@ -31,7 +30,7 @@ public class CartPage extends BasePage {
         super(driver, waitHelper);
     }
 
-     public int getCheapestProductIndex() {
+    public int getCheapestProductIndex() {
         double minPrice = Double.MAX_VALUE;
         int minIndex = 0;
 
@@ -60,17 +59,15 @@ public class CartPage extends BasePage {
             double price = Double.parseDouble(priceText);
             total += price;
         }
-    return total;
+        return total;
     }
+
     public double getActualSubTotal() {
-        String totalText = subTotalPrice.getText()
-                .replace("$", "")
-                .replace("€", "")
-                .replace(",", "");
+        String totalText = subTotalPrice.getText().replace("$", "").replace("€", "").replace(",", "");
         return Double.parseDouble(totalText);
     }
 
-    public CartPage removeEvenProducts()  {
+    public CartPage removeEvenProducts() {
         if (!listOfRemoveButtons.isEmpty()) {
             for (int i = listOfRemoveButtons.size() - 1; i >= 0; i--) {
                 if (i % 2 != 0) {

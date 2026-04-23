@@ -1,5 +1,6 @@
 name: Automation Tests
 
+
 on:
   push:
     branches: [ main, master ]
@@ -27,18 +28,13 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Install Chrome and Xvfb
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable xvfb
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
 
-      - name: Run tests with Xvfb
-        run: |
-          Xvfb :99 -screen 0 1920x1080x24 &
-          export DISPLAY=:99
-          mvn clean test
-        env:
-          CI: true
+      - name: Run tests
+        run: mvn clean test -Dconfig.file=config.ci.properties
 
       - name: Upload test reports
         if: always()

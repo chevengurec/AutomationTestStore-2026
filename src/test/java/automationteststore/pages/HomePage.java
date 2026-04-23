@@ -13,11 +13,11 @@ public class HomePage extends BasePage {
 
     @FindBy(xpath = "//li//a[starts-with(@href, 'https://automationteststore.com/index.php?rt=product/category&path=') and not(contains(substring-after(@href, 'path='), '_')) and not(contains(substring-after(@href, 'path='), '&'))]")
     private List<WebElement> categories;
-    @FindBy(xpath="//input[@id='filter_keyword']")
+    @FindBy(xpath = "//input[@id='filter_keyword']")
     private WebElement searchInput;
-    @FindBy(xpath="//div[@class='button-in-search']")
+    @FindBy(xpath = "//div[@class='button-in-search']")
     private WebElement searchButton;
-    @FindBy(xpath="//a[@class='dropdown-toggle' and contains(@href, 'checkout/cart')]")
+    @FindBy(xpath = "//a[@class='dropdown-toggle' and contains(@href, 'checkout/cart')]")
     private WebElement cartLink;
 
     @FindBy(xpath = "//div[@class='fixed']//a[@class='prdocutname']")
@@ -25,7 +25,6 @@ public class HomePage extends BasePage {
 
     @FindBy(xpath = "//div[@class='pricetag jumbotron']//a[@class='productcart'][@href='#']")
     private List<WebElement> listOfAddingButtons;
-
 
 
     public HomePage(WebDriver driver, WaitHelper waitHelper) {
@@ -43,7 +42,7 @@ public class HomePage extends BasePage {
         return new CategoryPage(driver, waitHelper);
     }
 
-      public SearchPage search(String keyword) {
+    public SearchPage search(String keyword) {
         fillFieldWithText(searchInput, keyword);
         click(searchButton);
         return new SearchPage(driver, waitHelper);
@@ -54,9 +53,9 @@ public class HomePage extends BasePage {
         return RandomPicker.getRandomElements(listOfAddingButtons, count);
     }
 
-    public HomePage addSeveralItemsToCartInSeveralQuantity(int numberOfItems)  {
+    public HomePage addSeveralItemsToCartInSeveralQuantity(int numberOfItems) {
 
-        List<WebElement> list =  pickRandomButtons(numberOfItems);
+        List<WebElement> list = pickRandomButtons(numberOfItems);
         Random random = new Random();
         for (WebElement button : list) {
             int count = random.nextInt(10) + 1;
@@ -64,7 +63,7 @@ public class HomePage extends BasePage {
                 waitHelper.waitForClickable(button);
                 button.click();
                 count--;
-                         }
+            }
         }
         return this;
     }

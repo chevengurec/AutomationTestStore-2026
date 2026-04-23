@@ -7,7 +7,10 @@ public class ConfiguratorManager {
 
     public static ProjectConfig getConfig() {
         if (config == null) {
-            config = ConfigCache.getOrCreate(ProjectConfig.class);
+            config = ConfigCache.getOrCreate(ProjectConfig.class,
+                    System.getenv(),
+                    System.getProperties()
+            );
         }
         return config;
     }

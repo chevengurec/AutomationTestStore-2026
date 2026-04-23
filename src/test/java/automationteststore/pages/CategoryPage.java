@@ -5,13 +5,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-
 import java.util.List;
 
 public class CategoryPage extends BasePage {
 
     @FindBy(xpath = "//li[@class='col-md-2 col-sm-2 col-xs-6 align_center']")
     protected List<WebElement> subCategories;
+
     public CategoryPage(WebDriver driver, WaitHelper waitHelper) {
         super(driver, waitHelper);
     }

@@ -1,46 +1,108 @@
 package automationteststore.tests;
 
-import java.io.File;
 import automationteststore.pages.HomePage;
 import automationteststore.pages.SubCategoryPage;
 import automationteststore.utils.SortValidator;
+import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.openqa.selenium.*;
-import java.io.IOException;
+
 import java.util.Comparator;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("CASE 1")
+@Epic("UI Тесты")
+@Feature("Сортировка товаров")
+@DisplayName("Тестирование сортировки в категориях")
 public class FilterSortTest extends BaseTest {
 
-    @ParameterizedTest(name = "{0} → {1} → {2}")
+    @Epic("UI Тесты")
+    @Feature("Сортировка товаров")
+    @Story("TC-01: Сортировка товаров по имени и цене")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Проверка сортировки товаров по имени A-Z")
+    @DisplayName("Сортировка по имени A-Z")
+    @ParameterizedTest(name = "{0} → {1}")
     @CsvSource({
-            "Makeup, Cheeks, Name A - Z",
-            "Makeup, Cheeks, Name Z - A",
-            "Makeup, Cheeks, Price Low > High",
-            "Makeup, Cheeks, Price High > Low",
-            "Skincare, Face, Name A - Z",
-            "Skincare, Face, Price Low > High",
-            "Books, Paperback, Name A - Z"
+            "Makeup, Cheeks",
+            "Skincare, Face",
+            "Books, Paperback"
     })
-    @DisplayName("Проверка сортировки товаров по имени и цене в обоих направлениях и финальной стоимости")
-    public void testFilterAndSortInCategories(String category, String subCategory, String sortType) throws IOException {
+    public void testSortByNameAsc(String category, String subCategory) {
 
         SubCategoryPage page = new HomePage(driver, waitHelper)
                 .navigateToCategory(category)
                 .selectSubCategory(subCategory)
-                .selectTypeOfSort(sortType);
+                .selectTypeOfSort("Name A - Z");
 
-        switch (sortType) {
-            case "Name A - Z" -> assertTrue(SortValidator.isSorted(page.getProductNames(), Comparator.naturalOrder()));
-            case "Name Z - A" -> assertTrue(SortValidator.isSorted(page.getProductNames(), Comparator.reverseOrder()));
-            case "Price Low > High" -> assertTrue(SortValidator.isSorted(page.getProductPrices(), Comparator.naturalOrder()));
-            case "Price High > Low" -> assertTrue(SortValidator.isSorted(page.getProductPrices(), Comparator.reverseOrder()));
-        }
+        assertTrue(
+                SortValidator.isSorted(page.getProductNames(), Comparator.naturalOrder())
+        );
+    }
 
-        ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE)
-                .renameTo(new File("screenshots/scr.png"));
+    @Epic("UI Тесты")
+    @Feature("Сортировка товаров")
+    @Story("TC-01: Сортировка товаров по имени и цене")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Проверка сортировки товаров по имени Z-A")
+    @DisplayName("Сортировка по имени Z-A")
+    @ParameterizedTest(name = "{0} → {1}")
+    @CsvSource({
+            "Makeup, Cheeks"
+    })
+    public void testSortByNameDesc(String category, String subCategory) {
+
+        SubCategoryPage page = new HomePage(driver, waitHelper)
+                .navigateToCategory(category)
+                .selectSubCategory(subCategory)
+                .selectTypeOfSort("Name Z - A");
+
+        assertTrue(
+                SortValidator.isSorted(page.getProductNames(), Comparator.reverseOrder())
+        );
+    }
+
+    @Epic("UI Тесты")
+    @Feature("Сортировка товаров")
+    @Story("TC-01: Сортировка товаров по имени и цене")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Проверка сортировки товаров по цене по возрастанию")
+    @DisplayName("Сортировка по цене Low → High")
+    @ParameterizedTest(name = "{0} → {1}")
+    @CsvSource({
+            "Makeup, Cheeks",
+            "Skincare, Face"
+    })
+    public void testSortByPriceAsc(String category, String subCategory) {
+
+        SubCategoryPage page = new HomePage(driver, waitHelper)
+                .navigateToCategory(category)
+                .selectSubCategory(subCategory)
+                .selectTypeOfSort("Price Low > High");
+
+        assertTrue(
+                SortValidator.isSorted(page.getProductPrices(), Comparator.naturalOrder())
+        );
+    }
+
+    @Epic("UI Тесты")
+    @Feature("Сортировка товаров")
+    @Story("TC-01: Сортировка товаров по имени и цене")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Проверка сортировки товаров по цене по убыванию")
+    @DisplayName("Сортировка по цене High → Low")
+    @Test
+    public void testSortByPriceDesc() {
+
+        SubCategoryPage page = new HomePage(driver, waitHelper)
+                .navigateToCategory("Makeup")
+                .selectSubCategory("Cheeks")
+                .selectTypeOfSort("Price High > Low");
+
+        assertTrue(
+                SortValidator.isSorted(page.getProductPrices(), Comparator.reverseOrder())
+        );
     }
 }

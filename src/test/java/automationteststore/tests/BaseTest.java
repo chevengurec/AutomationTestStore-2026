@@ -12,7 +12,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import java.io.IOException;
 import java.time.Duration;
 
 @ExtendWith(ScreenshotExtension.class)
@@ -28,28 +27,27 @@ public class BaseTest {
 
         ChromeOptions options = new ChromeOptions();
 
-        if (System.getenv("CI") != null) {
-            options.addArguments("--headless=new");
-            options.addArguments("--no-sandbox");
-            options.addArguments("--disable-dev-shm-usage");
-            options.addArguments("--disable-gpu");
-            options.addArguments("--window-size=1920,1080");
+        if (config.headless()) {
+            String[] args = config.webdriverArgs().split(",");
+            for (String arg : args) {
+                String trimmed = arg.trim();
+                if (!trimmed.isEmpty()) {
+                    options.addArguments(trimmed);
+                }
+            }
             driver = new ChromeDriver(options);
         } else {
             driver = new ChromeDriver(options);
             driver.manage().window().maximize();
         }
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(
-                System.getenv("CI") != null ? 30 : 10
-        ));
-
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(config.timeoutSeconds()));
         driver.get(config.homepageUrl());
-        waitHelper = new WaitHelper(driver, 10);
+        waitHelper = new WaitHelper(driver, config.timeoutSeconds());
     }
 
     @AfterEach
-    public void tearDown()  {
+    public void tearDown() {
         if (driver != null) {
             driver.quit();
         }
