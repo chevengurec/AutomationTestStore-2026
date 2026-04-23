@@ -9,6 +9,7 @@ import org.aeonbits.owner.Config.Sources;
 @Sources({
         "system:properties",
         "system:env",
+        "classpath:config.ci.properties",
         "file:~/config.properties",
         "classpath:config.properties"
 })
