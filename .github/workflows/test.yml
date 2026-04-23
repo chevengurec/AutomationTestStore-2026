@@ -33,7 +33,7 @@ jobs:
           chrome-version: stable
 
       - name: Run tests
-        run: mvn clean test
+        run: mvn clean test -Djunit.jupiter.execution.parallel.enabled=false
 
       - name: Upload test reports
         if: always()
