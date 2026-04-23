@@ -32,8 +32,11 @@ jobs:
         with:
           chrome-version: stable
 
+      - name: Copy CI config to default config
+        run: cp src/test/resources/config.ci.properties src/test/resources/config.properties
+
       - name: Run tests
-        run: mvn clean test -Djunit.jupiter.execution.parallel.enabled=false
+        run: mvn clean test
 
       - name: Upload test reports
         if: always()
