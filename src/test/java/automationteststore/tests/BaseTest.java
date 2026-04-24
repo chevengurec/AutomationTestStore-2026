@@ -9,6 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -26,13 +27,13 @@ public class BaseTest {
     @BeforeEach
     public void setUp() {
 
+
         ProjectConfig config = ConfiguratorManager.getConfig();
 
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
 
-        // просто читаем всё из конфига
         String args = config.chromeArgs();
 
         if (args != null && !args.isBlank()) {
@@ -48,19 +49,25 @@ public class BaseTest {
         driver.get(config.homepageUrl());
 
         WebDriverWait pageWait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+        // 1. page loaded
         pageWait.until(webDriver ->
-                ((org.openqa.selenium.JavascriptExecutor) webDriver)
+                ((JavascriptExecutor) webDriver)
                         .executeScript("return document.readyState")
                         .equals("complete")
         );
 
-        waitHelper = new WaitHelper(driver, 10);
-
+        // 2. DOM exists
         pageWait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
 
+        // 3. small stabilization
         waitHelper = new WaitHelper(driver, 10);
-
         waitHelper.shortDelay();
+
+        // 4. LOGS (ПОСЛЕ стабилизации!)
+        System.out.println("CURRENT URL: " + driver.getCurrentUrl());
+        System.out.println("TITLE: " + driver.getTitle());
+        System.out.println("SORT COUNT: " + driver.findElements(By.id("sort")).size());
     }
 
 
