@@ -9,7 +9,6 @@ import org.aeonbits.owner.Config.Sources;
 @Sources({
         "system:properties",
         "system:env",
-        "classpath:config.ci.properties",
         "file:~/config.properties",
         "classpath:config.properties"
 })
@@ -20,16 +19,4 @@ public interface ProjectConfig extends Config {
 
     @Key("screenshot.pathname")
     String screenshotPathname();
-
-    @Key("webdriver.headless")
-    @DefaultValue("false")
-    boolean headless();
-
-    @Key("webdriver.timeout.seconds")
-    @DefaultValue("10")
-    int timeoutSeconds();
-
-    @Key("webdriver.args")
-    @DefaultValue("")
-    String webdriverArgs();
 }
