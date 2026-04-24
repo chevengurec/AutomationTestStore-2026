@@ -5,7 +5,9 @@ import automationteststore.utils.WaitHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Random;
 
@@ -33,12 +35,22 @@ public class HomePage extends BasePage {
     }
 
     public CategoryPage navigateToCategory(String categoryName) {
+
+        String oldUrl = driver.getCurrentUrl();
+
         for (WebElement categorie : categories) {
             if (categorie.getText().trim().equalsIgnoreCase(categoryName)) {
+
+                waitHelper.waitForClickable(categorie);
                 categorie.click();
                 break;
             }
         }
+
+        // 🔥 ВАЖНО: ждем смену страницы
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(d -> !d.getCurrentUrl().equals(oldUrl));
+
         return new CategoryPage(driver, waitHelper);
     }
 
