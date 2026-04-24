@@ -22,24 +22,28 @@ public class BaseTest {
 
     @BeforeEach
     public void setUp() {
+
         ProjectConfig config = ConfiguratorManager.getConfig();
+
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
 
-        if (System.getenv("CI") != null) {
-            String[] args = config.ciArgs().split(",");
-            for (String arg : args) {
+        // просто читаем всё из конфига
+        String args = config.chromeArgs();
+
+        if (args != null && !args.isBlank()) {
+            for (String arg : args.split(",")) {
                 options.addArguments(arg.trim());
             }
-            driver = new ChromeDriver(options);
-        } else {
-            driver = new ChromeDriver(options);
-            driver.manage().window().maximize();
         }
 
+        driver = new ChromeDriver(options);
+
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
         driver.get(config.homepageUrl());
+
         waitHelper = new WaitHelper(driver, 10);
     }
 

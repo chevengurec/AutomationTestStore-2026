@@ -9,7 +9,6 @@ import org.aeonbits.owner.Config.Sources;
 @Sources({
         "system:properties",
         "system:env",
-        "file:~/config.properties",
         "classpath:config.properties",
         "classpath:config.${env}.properties"
 })
@@ -21,7 +20,6 @@ public interface ProjectConfig extends Config {
     @Key("screenshot.pathname")
     String screenshotPathname();
 
-    @Key("webdriver.ci.args")
-    @DefaultValue("")
-    String ciArgs();
+    @Key("chrome.args")
+    String chromeArgs();
 }
