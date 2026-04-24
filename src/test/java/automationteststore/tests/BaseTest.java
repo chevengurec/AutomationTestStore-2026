@@ -28,11 +28,10 @@ public class BaseTest {
         ChromeOptions options = new ChromeOptions();
 
         if (System.getenv("CI") != null) {
-            options.addArguments("--headless=new");
-            options.addArguments("--no-sandbox");
-            options.addArguments("--disable-dev-shm-usage");
-            options.addArguments("--disable-gpu");
-            options.addArguments("--window-size=1920,1080");
+            String[] args = config.ciArgs().split(",");
+            for (String arg : args) {
+                options.addArguments(arg.trim());
+            }
             driver = new ChromeDriver(options);
         } else {
             driver = new ChromeDriver(options);
