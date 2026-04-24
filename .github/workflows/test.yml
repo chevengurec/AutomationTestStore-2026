@@ -33,7 +33,7 @@ jobs:
           chrome-version: stable
 
       - name: Run tests
-        run: mvn clean test
+        run: mvn clean test -Dconfig.file=src/test/resources/config.ci.properties
 
       - name: Upload test reports
         if: always()
