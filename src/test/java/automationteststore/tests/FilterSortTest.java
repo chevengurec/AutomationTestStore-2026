@@ -6,6 +6,8 @@ import automationteststore.utils.SortValidator;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.TestWatcher;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -50,7 +52,7 @@ public class FilterSortTest extends BaseTest {
     @DisplayName("Сортировка по имени Z-A")
     @ParameterizedTest(name = "{0} → {1}")
     @CsvSource({
-            "Makeup, Cheeks"
+            "Makeup123, Cheeks"
     })
     public void testSortByNameDesc(String category, String subCategory) {
 

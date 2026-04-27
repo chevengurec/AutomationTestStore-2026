@@ -2,12 +2,14 @@ package automationteststore.tests;
 
 import automationteststore.config.ConfiguratorManager;
 import automationteststore.config.ProjectConfig;
-import automationteststore.utils.ScreenshotExtension;
+import automationteststore.utils.MyTestWatcher;
 import automationteststore.utils.WaitHelper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.TestWatcher;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -15,11 +17,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-@ExtendWith(ScreenshotExtension.class)
+@ExtendWith(MyTestWatcher.class)
 public class BaseTest {
 
     protected WebDriver driver;
     protected WaitHelper waitHelper;
+
+    public WebDriver getDriver() {
+        return driver;
+    }
+
 
     @BeforeEach
     public void setUp() {

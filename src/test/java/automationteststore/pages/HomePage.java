@@ -25,8 +25,6 @@ public class HomePage extends BasePage {
 
     @FindBy(xpath = "//div[@class='pricetag jumbotron']//a[@class='productcart'][@href='#']")
     private List<WebElement> listOfAddingButtons;
-
-
     public HomePage(WebDriver driver, WaitHelper waitHelper) {
 
         super(driver, waitHelper);
