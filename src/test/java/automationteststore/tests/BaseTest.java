@@ -45,6 +45,10 @@ public class BaseTest {
             }
         }
 
+        if (System.getenv("CI") != null || "ci".equals(System.getProperty("env"))) {
+            options.addArguments("--remote-allow-origins=*");
+        }
+
         driver = new ChromeDriver(options);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
