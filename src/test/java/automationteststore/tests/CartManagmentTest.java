@@ -2,8 +2,10 @@ package automationteststore.tests;
 
 import automationteststore.pages.CartPage;
 import automationteststore.pages.HomePage;
+import automationteststore.utils.MyTestWatcher;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -13,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Epic("UI Тесты")
 @Feature("Управление корзиной")
 @DisplayName("Тестирование корзины")
+@ExtendWith(MyTestWatcher.class)
 public class CartManagmentTest extends BaseTest {
 
     @ParameterizedTest(name = "Добавление {0} товаров")

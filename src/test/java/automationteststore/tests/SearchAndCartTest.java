@@ -2,9 +2,11 @@ package automationteststore.tests;
 
 import automationteststore.pages.CartPage;
 import automationteststore.pages.HomePage;
+import automationteststore.utils.MyTestWatcher;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -13,6 +15,7 @@ import java.util.Random;
 @Epic("UI Тесты")
 @Feature("Поиск и корзина")
 @DisplayName("Тестирование поиска и корзины")
+@ExtendWith(MyTestWatcher.class)
 public class SearchAndCartTest extends BaseTest {
 
     @ParameterizedTest(name = "Поиск: {0}")

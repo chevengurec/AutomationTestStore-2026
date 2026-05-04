@@ -2,6 +2,7 @@ package automationteststore.tests;
 
 import automationteststore.pages.HomePage;
 import automationteststore.pages.SubCategoryPage;
+import automationteststore.utils.MyTestWatcher;
 import automationteststore.utils.SortValidator;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Epic("UI Тесты")
 @Feature("Сортировка товаров")
 @DisplayName("Тестирование сортировки в категориях")
+@ExtendWith(MyTestWatcher.class)
 public class FilterSortTest extends BaseTest {
 
     @Epic("UI Тесты")
