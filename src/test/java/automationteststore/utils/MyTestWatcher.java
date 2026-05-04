@@ -8,6 +8,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,19 +16,69 @@ import java.nio.file.StandardCopyOption;
 
 public class MyTestWatcher implements TestWatcher {
 
+//    @Override
+//    public void testFailed(ExtensionContext context, Throwable cause) {
+//
+//        System.out.println(">>> TEST FAILED: " + context.getDisplayName());
+//
+//        Object testInstance = context.getRequiredTestInstance();
+//
+//        if (!(testInstance instanceof BaseTest)) {
+//            System.out.println("Test is not instance of BaseTest");
+//            return;
+//        }
+//
+//        WebDriver driver = ((BaseTest) testInstance).getDriver();
+//
+//        if (driver == null) {
+//            System.out.println("Driver is NULL!");
+//            return;
+//        }
+//
+//        try {
+//            // 📸 Allure (оставляем)
+//            AllureAttachmentManager.screenshot(driver);
+//
+//            // 📁 Файл для CI
+//            File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+//
+//            Path folder = Paths.get("target/screenshots/");
+//            Files.createDirectories(folder);
+//
+//            String testName = context.getRequiredTestMethod().getName();
+//            String safeName = testName.replaceAll("[^a-zA-Z0-9._-]", "_");
+//
+//            Path targetPath = folder.resolve(safeName + ".png");
+//
+//            Files.copy(
+//                    scrFile.toPath(),
+//                    targetPath,
+//                    StandardCopyOption.REPLACE_EXISTING
+//            );
+//
+//            System.out.println("Screenshot saved: " + targetPath.toAbsolutePath());
+//
+//        } catch (Exception e) {
+//            System.out.println("❌ Screenshot failed:");
+//            e.printStackTrace();
+//        }
+//    }
+
     @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
 
-        System.out.println(">>> TEST FAILED: " + context.getDisplayName());
+        System.out.println(">>> TEST FAILED <<<");
 
         Object testInstance = context.getRequiredTestInstance();
 
-        if (!(testInstance instanceof BaseTest)) {
-            System.out.println("Test is not instance of BaseTest");
-            return;
-        }
+        WebDriver driver = null;
 
-        WebDriver driver = ((BaseTest) testInstance).getDriver();
+        try {
+            Method method = testInstance.getClass().getMethod("getDriver");
+            driver = (WebDriver) method.invoke(testInstance);
+        } catch (Exception e) {
+            System.out.println("Driver extraction failed");
+        }
 
         if (driver == null) {
             System.out.println("Driver is NULL!");
@@ -35,30 +86,21 @@ public class MyTestWatcher implements TestWatcher {
         }
 
         try {
-            // 📸 Allure (оставляем)
             AllureAttachmentManager.screenshot(driver);
 
-            // 📁 Файл для CI
             File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
             Path folder = Paths.get("target/screenshots/");
             Files.createDirectories(folder);
 
-            String testName = context.getRequiredTestMethod().getName();
-            String safeName = testName.replaceAll("[^a-zA-Z0-9._-]", "_");
+            String name = context.getRequiredTestMethod().getName();
+            Path target = folder.resolve(name + ".png");
 
-            Path targetPath = folder.resolve(safeName + ".png");
+            Files.copy(scrFile.toPath(), target, StandardCopyOption.REPLACE_EXISTING);
 
-            Files.copy(
-                    scrFile.toPath(),
-                    targetPath,
-                    StandardCopyOption.REPLACE_EXISTING
-            );
-
-            System.out.println("Screenshot saved: " + targetPath.toAbsolutePath());
+            System.out.println("Screenshot saved: " + target.toAbsolutePath());
 
         } catch (Exception e) {
-            System.out.println("❌ Screenshot failed:");
             e.printStackTrace();
         }
     }
