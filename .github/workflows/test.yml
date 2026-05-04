@@ -2,9 +2,9 @@ name: Automation Tests
 
 on:
   push:
-    branches: [ main, master, develop, updating ]
+    branches: [ main, master, develop, updating, addingWatcher ]
   pull_request:
-    branches: [ main, master, develop, updating ]
+    branches: [ main, master, develop, updating, addingWatcher ]
   workflow_dispatch:
 
 jobs:
